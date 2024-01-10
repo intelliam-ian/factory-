@@ -49,7 +49,7 @@ spec:
             - name: KRB5_CONFIG
               value: /config/krb5-conf/krb5.conf
             - name: PGHOST
-              value: postgres.{{ .Release.Namespace }}.svc.cluster.local
+              value: postgres.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: PGUSER
               value: op1pgadmin
             - name: PGDATABASE
@@ -76,13 +76,13 @@ spec:
               value: /keytabs/server
             # These two are used to verify Basic auth.
             - name: HOSTNAME
-              value: directory.{{ .Release.Namespace }}.svc.cluster.local
+              value: directory.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: REALM
               value: {{ .Values.identity.realm }}
             - name: PORT
               value: "8080"
             - name: PGHOST
-              value: postgres.{{ .Release.Namespace }}.svc.cluster.local
+              value: postgres.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: PGUSER
               value: sv1directory
             - name: PGDATABASE
@@ -95,7 +95,7 @@ spec:
               value: admin@{{ .Values.identity.realm }}
             # This is used to check our ACLs so it does not need to be externally resolvable.
             - name: AUTHN_URL
-              value: http://auth.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://auth.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
           volumeMounts:
             - mountPath: /config/krb5-conf
               name: krb5-conf

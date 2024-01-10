@@ -45,7 +45,7 @@ spec:
             - name: KRB5_CONFIG
               value: /config/krb5-conf/krb5.conf
             - name: PGHOST
-              value: postgres.{{ .Release.Namespace }}.svc.cluster.local
+              value: postgres.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: PGUSER
               value: op1pgadmin
             - name: PGDATABASE
@@ -75,7 +75,7 @@ spec:
             - name: PORT
               value: "8080"
             - name: PGHOST
-              value: postgres.{{ .Release.Namespace }}.svc.cluster.local
+              value: postgres.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: PGUSER
               value: sv1directory
             - name: PGDATABASE
@@ -90,9 +90,9 @@ spec:
               value: "{{ .Values.acs.secure | ternary "https://" "http://" }}directory.{{.Values.acs.externalDomain }}"
             # This is used to check our ACLs so it does not need to be externally resolvable.
             - name: AUTHN_URL
-              value: http://auth.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://auth.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: MQTT_BROKER
-              value: mqtt://mqtt.{{ .Release.Namespace }}.svc.cluster.local
+              value: mqtt://mqtt.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
           volumeMounts:
             - mountPath: /config/krb5-conf
               name: krb5-conf

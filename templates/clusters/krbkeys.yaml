@@ -16,7 +16,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/clusters.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
+  principal: HTTP/clusters.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}@{{ .Values.identity.realm }}
   additionalPrincipals:
     - HTTP/clusters.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
   secret: clusters-keytabs/server

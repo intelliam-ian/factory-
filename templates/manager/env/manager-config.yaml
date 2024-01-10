@@ -20,20 +20,20 @@ data:
   QUEUE_CONNECTION: "database"
   SESSION_LIFETIME: "10080"
   DB_CONNECTION: "pgsql"
-  DB_HOST: "manager-database.{{ .Release.Namespace }}.svc.cluster.local"
+  DB_HOST: "manager-database.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}"
   DB_PORT: "5432"
   DB_DATABASE: "manager"
   DB_USERNAME: "postgres"
   FILESYSTEM_CLOUD: "minio"
-  MINIO_ENDPOINT: "http://fplus-minio-core-hl.{{ .Release.Namespace }}.svc.cluster.local:9000"
+  MINIO_ENDPOINT: "http://fplus-minio-core-hl.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}:9000"
   SCOUT_DRIVER: "meilisearch"
-  MEILISEARCH_HOST: "http://manager-meilisearch.{{ .Release.Namespace }}.svc.cluster.local:7700"
+  MEILISEARCH_HOST: "http://manager-meilisearch.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}:7700"
 
   APP_ORGANISATION: {{.Values.acs.organisation | quote }}
   APP_NAMESPACE: {{ .Release.Namespace | quote }}
   BASE_URL: {{ .Values.acs.externalDomain | quote }}
   REALM: {{.Values.identity.realm | quote }}
   SERVICE_SCHEME: "http"
-  MANAGER_SERVICE_PRINCIPAL: "HTTP/manager.{{ .Release.Namespace }}.svc.cluster.local"
+  MANAGER_SERVICE_PRINCIPAL: "HTTP/manager.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}"
   MANAGER_CLIENT_PRINCIPAL: "sv1manager"
 {{- end -}}

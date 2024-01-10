@@ -13,7 +13,7 @@ data:
         spake_preauth_groups = edwards25519
 
     [domain_realm]
-        cluster.local = {{ .Values.identity.realm }}
+        {{.Values.acs.internalDomain}} = {{ .Values.identity.realm }}
             {{.Values.acs.externalDomain }} = {{ .Values.identity.realm }}
 {{- range .Values.identity.crossRealm }}
 {{- $realm := .realm }}
@@ -25,8 +25,8 @@ data:
 
     [realms]
             {{ .Values.identity.realm }} = {
-            kdc = kdc.{{.Release.Namespace }}.svc.cluster.local
-            admin_server = kadmin.{{ .Release.Namespace }}.svc.cluster.local
+            kdc = kdc.{{.Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
+            admin_server = kadmin.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             disable_encrypted_timestamp = true
         }
 {{- range .Values.identity.crossRealm }}

@@ -53,7 +53,7 @@ spec:
                 secretKeyRef:
                   name: krb5-passwords
                   key: admin
-          command: [ 'sh', '-c', 'until curl -X PUT -o /dev/null -w "%{http_code}" -u "admin:${PASSWORD}" -H "Content-Type: application/json" --data-raw "{ \"url\": \"http://configdb.{{.Release.Namespace}}.svc.cluster.local\" }" http://directory.{{.Release.Namespace}}.svc.cluster.local/v1/service/af15f175-78a0-4e05-97c0-2a0bb82b9f3b/advertisment/36861e8d-9152-40c4-8f08-f51c2d7e3c25 | grep -E "2[0-9]{2}" > /dev/null; do sleep 10; done' ]
+          command: [ 'sh', '-c', 'until curl -X PUT -o /dev/null -w "%{http_code}" -u "admin:${PASSWORD}" -H "Content-Type: application/json" --data-raw "{ \"url\": \"http://configdb.{{.Release.Namespace}}.svc.{{.Values.acs.internalDomain}}\" }" http://directory.{{.Release.Namespace}}.svc.{{.Values.acs.internalDomain}}/v1/service/af15f175-78a0-4e05-97c0-2a0bb82b9f3b/advertisment/36861e8d-9152-40c4-8f08-f51c2d7e3c25 | grep -E "2[0-9]{2}" > /dev/null; do sleep 10; done' ]
         - name: db-init
 {{ include "amrc-connectivity-stack.image" .Values.configdb | indent 10 }}
           command: [ "/usr/bin/k5start", "-Uf", "/keytabs/dbadmin", "/usr/local/bin/psql" ]
@@ -62,7 +62,7 @@ spec:
             - name: KRB5_CONFIG
               value: /config/krb5-conf/krb5.conf
             - name: PGHOST
-              value: postgres.{{ .Release.Namespace }}.svc.cluster.local
+              value: postgres.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: PGUSER
               value: op1pgadmin
             - name: PGDATABASE
@@ -85,7 +85,7 @@ spec:
             - name: KRB5_CONFIG
               value: /config/krb5-conf/krb5.conf
             - name: PGHOST
-              value: postgres.{{ .Release.Namespace }}.svc.cluster.local
+              value: postgres.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: PGUSER
               value: sv1configdb
             - name: PGDATABASE
@@ -114,7 +114,7 @@ spec:
               value: /keytabs/server
             # These two are used to verify Basic auth.
             - name: HOSTNAME
-              value: configdb.{{ .Release.Namespace }}.svc.cluster.local
+              value: configdb.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: REALM
               value: {{ .Values.identity.realm }}
             - name: DEVICE_UUID
@@ -124,7 +124,7 @@ spec:
             - name: PORT
               value: "8080"
             - name: PGHOST
-              value: postgres.{{ .Release.Namespace }}.svc.cluster.local
+              value: postgres.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: PGUSER
               value: sv1configdb
             - name: PGDATABASE
@@ -139,10 +139,10 @@ spec:
             # not use this so publish an internal URL. This will allow
             # the Directory to be smart about what to tell clients.
             - name: HTTP_API_URL
-              value: http://configdb.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://configdb.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             # This is used for service discovery so it does not need to be externally resolvable.
             - name: DIRECTORY_URL
-              value: http://directory.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://directory.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
 
           volumeMounts:
             - mountPath: /config/krb5-conf

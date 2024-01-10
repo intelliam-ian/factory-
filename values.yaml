@@ -5,6 +5,8 @@ acs:
   #organisation: AMRC
   # -- The external DNS domain used by this deployment
   #externalDomain: factoryplus.myorganisation.com
+  # -- The internal DNS domain used by the Kubernetes cluster
+  #internalDomain: cluster.local
   # -- Whether or not services should be served over HTTPS
   secure: true
   # -- The name of the secret holding the wildcard certificate for the above domain.

@@ -65,13 +65,13 @@ spec:
             - name: SERVER_KEYTAB
               value: /keytabs/server
             - name: HOSTNAME
-              value: git.{{ .Release.Namespace }}.svc.cluster.local
+              value: git.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: REALM
               value: {{ .Values.identity.realm }}
             - name: HTTP_API_URL
               value: http://git.{{ .Values.acs.externalDomain }}
             - name: DIRECTORY_URL
-              value: http://directory.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://directory.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
           volumeMounts:
             - mountPath: /config/krb5-conf
               name: krb5-conf

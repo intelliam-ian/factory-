@@ -43,7 +43,7 @@ spec:
             - name: SERVER_KEYTAB
               value: /keytabs/server
             - name: HOSTNAME
-              value: cmdesc.{{ .Release.Namespace }}.svc.cluster.local
+              value: cmdesc.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: REALM
               value: {{ .Values.identity.realm }}
             - name: SPARKPLUG_ADDRESS
@@ -55,12 +55,12 @@ spec:
             - name: VERBOSE
               value: {{.Values.cmdesc.verbosity | quote | required "values.cmdesc.verbosity is required!"}}
             - name: HTTP_API_URL
-              value: http://cmdesc.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://cmdesc.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: PORT
               value: "8080"
 {{ include "amrc-connectivity-stack.cache-max-age" (list . "cmdesc") | indent 12 }}
             - name: DIRECTORY_URL
-              value: http://directory.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://directory.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
           volumeMounts:
             - mountPath: /config/krb5-conf
               name: krb5-conf

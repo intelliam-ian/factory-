@@ -46,9 +46,9 @@ spec:
             - name: FLUSH_INTERVAL
               value: {{ .Values.warehouse.ingester.flushInterval | quote | required "values.warehouse.ingester.flushInterval" }}
             - name: DIRECTORY_URL
-              value: http://directory.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://directory.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: INFLUX_URL
-              value: http://acs-influxdb2.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://acs-influxdb2.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: INFLUX_ORG
               value: default
             - name: INFLUX_BUCKET

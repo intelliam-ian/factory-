@@ -21,7 +21,7 @@ spec:
 {{ include "amrc-connectivity-stack.image" .Values.serviceSetup | indent 10 }}
           env:
             - name: DIRECTORY_URL
-              value: http://directory.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://directory.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: SERVICE_USERNAME
               value: admin
             - name: SERVICE_PASSWORD

@@ -43,7 +43,7 @@ spec:
             - name: KADMIN_CCNAME
               value: /ccache/kadmin
             - name: DIRECTORY_URL
-              value: http://directory.{{ .Release.Namespace }}.svc.cluster.local
+              value: http://directory.{{ .Release.Namespace }}.svc.{{.Values.acs.internalDomain}}
             - name: VERBOSE
               value: "1"
             # The k8s namespaces to watch for KerberosKey objects. This should be a comma-separated list.
