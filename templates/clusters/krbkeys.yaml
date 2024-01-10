@@ -18,6 +18,6 @@ spec:
   type: Random
   principal: HTTP/clusters.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/clusters.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - HTTP/clusters.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
   secret: clusters-keytabs/server
 {{- end }}

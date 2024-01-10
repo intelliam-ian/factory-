@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`loki.{{.Values.acs.baseUrl }}`)
+    - match: Host(`loki.{{.Values.acs.externalDomain }}`)
       kind: Rule
       middlewares:
         - name: basic-auth
@@ -20,6 +20,6 @@ spec:
   tls:
     secretName: {{ .Values.acs.tlsSecretName }}
     domains:
-      - main: loki.{{.Values.acs.baseUrl }}
+      - main: loki.{{.Values.acs.externalDomain }}
   {{- end -}}
 {{- end -}}

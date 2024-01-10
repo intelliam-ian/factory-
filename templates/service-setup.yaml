@@ -39,7 +39,7 @@ spec:
               value: {{
                 dict
                   "organisation"    .Values.acs.organisation
-                  "domain"          .Values.acs.baseUrl
+                  "domain"          .Values.acs.externalDomain
                   "realm"           .Values.identity.realm
                   "directory"
                     (include "amrc-connectivity-stack.external-url" 

@@ -73,7 +73,7 @@ Fetch an external service URL
 {{- $srv := index . 1 }}
 {{- $top.Values.acs.secure | ternary "https://" "http://" }}
 {{- $srv }}.
-{{- $top.Values.acs.baseUrl }}
+{{- $top.Values.acs.externalDomain }}
 {{- end }}
 
 {{/*

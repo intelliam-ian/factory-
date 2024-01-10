@@ -14,7 +14,7 @@ data:
 
     [domain_realm]
         cluster.local = {{ .Values.identity.realm }}
-            {{.Values.acs.baseUrl }} = {{ .Values.identity.realm }}
+            {{.Values.acs.externalDomain }} = {{ .Values.identity.realm }}
 {{- range .Values.identity.crossRealm }}
 {{- $realm := .realm }}
         {{ .domain }} = {{ $realm }}

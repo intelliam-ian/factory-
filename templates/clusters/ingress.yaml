@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`clusters.{{.Values.acs.baseUrl }}`)
+    - match: Host(`clusters.{{.Values.acs.externalDomain }}`)
       kind: Rule
       services:
         - name: clusters
@@ -18,6 +18,6 @@ spec:
   tls:
     secretName: {{ .Values.acs.tlsSecretName }}
     domains:
-      - main: clusters.{{.Values.acs.baseUrl }}
+      - main: clusters.{{.Values.acs.externalDomain }}
   {{- end -}}
 {{- end -}}

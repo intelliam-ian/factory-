@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`git.{{.Values.acs.baseUrl }}`)
+    - match: Host(`git.{{.Values.acs.externalDomain }}`)
       kind: Rule
       services:
         - name: git
@@ -18,6 +18,6 @@ spec:
   tls:
     secretName: {{ .Values.acs.tlsSecretName }}
     domains:
-      - main: git.{{.Values.acs.baseUrl }}
+      - main: git.{{.Values.acs.externalDomain }}
   {{- end -}}
 {{- end -}}

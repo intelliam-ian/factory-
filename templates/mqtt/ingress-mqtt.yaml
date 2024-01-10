@@ -17,6 +17,6 @@ spec:
   tls:
     secretName: {{ .Values.switchboard.enabled | ternary "factoryplus-mqtt-tls" "factoryplus-tls" }}
     domains:
-      - main: mqtt.{{.Values.acs.baseUrl }}
+      - main: mqtt.{{.Values.acs.externalDomain }}
   {{ end }}
 {{- end -}}

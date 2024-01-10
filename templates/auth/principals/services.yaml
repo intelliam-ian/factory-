@@ -20,7 +20,7 @@ spec:
   type: Random
   principal: HTTP/auth.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/auth.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - HTTP/auth.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.cmdesc.enabled }}
@@ -33,7 +33,7 @@ spec:
   type: Random
   principal: HTTP/cmdesc.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/cmdesc.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - HTTP/cmdesc.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.configdb.enabled }}
@@ -46,7 +46,7 @@ spec:
   type: Random
   principal: HTTP/configdb.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/configdb.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - HTTP/configdb.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.directory.enabled }}
@@ -59,7 +59,7 @@ spec:
   type: Random
   principal: HTTP/directory.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/directory.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - HTTP/directory.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.mqtt.enabled }}
@@ -72,7 +72,7 @@ spec:
   type: Random
   principal: mqtt/mqtt.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - mqtt/mqtt.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - mqtt/mqtt.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.manager.enabled }}
@@ -85,7 +85,7 @@ spec:
   type: Random
   principal: HTTP/manager.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/manager.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - HTTP/manager.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
   secret: manager-keytab/keytab
 {{- end }}
 ---
@@ -110,7 +110,7 @@ spec:
   type: Random
   principal: HTTP/warehouse.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/warehouse.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - HTTP/warehouse.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.git.enabled }}
@@ -123,6 +123,6 @@ spec:
   type: Random
   principal: HTTP/git.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/git.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
+    - HTTP/git.{{.Values.acs.externalDomain }}@{{ .Values.identity.realm }}
   secret: git-keytabs/server
 {{- end }}

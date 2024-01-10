@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`grafana.{{.Values.acs.baseUrl }}`)
+    - match: Host(`grafana.{{.Values.acs.externalDomain }}`)
       kind: Rule
       middlewares:
         - name: basic-auth
@@ -20,6 +20,6 @@ spec:
   tls:
     secretName: {{ .Values.switchboard.enabled | ternary "factoryplus-grafana-tls" "factoryplus-tls" }}
     domains:
-      - main: grafana.{{.Values.acs.baseUrl }}
+      - main: grafana.{{.Values.acs.externalDomain }}
   {{- end -}}
 {{- end -}}

@@ -48,11 +48,11 @@ spec:
             - name: REALM
               value: {{ .Values.identity.realm }}
             - name: EXTERNAL_DOMAIN
-              value: {{ .Values.acs.baseUrl }}
+              value: {{ .Values.acs.externalDomain }}
             - name: GIT_CHECKOUTS_DIR
               value: /data
             - name: GIT_EMAIL
-              value: sv1clusters@{{.Values.acs.baseUrl }}
+              value: sv1clusters@{{.Values.acs.externalDomain }}
             - name: KUBESEAL_TEMP
               value: /cert
             - name: KRBKEYS_IMAGE
