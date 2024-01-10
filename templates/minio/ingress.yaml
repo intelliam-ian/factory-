@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`data.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}`)
+    - match: Host(`data.{{.Values.acs.baseUrl }}`)
       kind: Rule
       services:
         - name: fplus-minio-core-hl
@@ -19,7 +19,7 @@ spec:
   tls:
     secretName: {{ .Values.switchboard.enabled | ternary "factoryplus-data-tls" "factoryplus-tls" }}
     domains:
-      - main: data.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}
+      - main: data.{{.Values.acs.baseUrl }}
   {{- end -}}
 ---
 {{if .Values.minio.exposeConsole}}
@@ -32,7 +32,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`minio.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}`)
+    - match: Host(`minio.{{.Values.acs.baseUrl }}`)
       kind: Rule
       services:
         - name: fplus-minio-core-console
@@ -43,7 +43,7 @@ spec:
   tls:
     secretName: {{ .Values.switchboard.enabled | ternary "factoryplus-minio-tls" "factoryplus-tls" }}
     domains:
-      - main: minio.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}
+      - main: minio.{{.Values.acs.baseUrl }}
   {{- end -}}
 {{- end -}}
 {{- end -}}

@@ -1,0 +1,7 @@
+{{/* Check required values in one place */}}
+{{ $_ := required "Kerberos realm is required (identity.realm)" .Values.identity.realm }}
+{{ $_ := required "External domain is required (acs.baseUrl)" .Values.acs.baseUrl }}
+{{ $_ := required "Organisation prefix is required (acs.organisation)" .Values.acs.organisation }}
+{{ if .Values.acs.secure }}
+{{ $_ := required "TLS secret is required (acs.tlsSecretName)" .Values.acs.tlsSecretName }}
+{{ end }}

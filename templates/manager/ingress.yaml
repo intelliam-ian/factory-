@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`manager.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}`)
+    - match: Host(`manager.{{.Values.acs.baseUrl }}`)
       kind: Rule
       services:
         - name: manager
@@ -18,6 +18,6 @@ spec:
   tls:
     secretName: {{ .Values.switchboard.enabled | ternary "factoryplus-manager-tls" "factoryplus-tls" }}
     domains:
-      - main: manager.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}
+      - main: manager.{{.Values.acs.baseUrl }}
   {{- end -}}
 {{- end -}}

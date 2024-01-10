@@ -91,7 +91,7 @@ data:
     # All ordinary connections are GSS (Kerberos) authenticated.
     # With these options only local-realm principals will be
     # allowed, and the database user name will not include the realm.
-    hostgssenc  all             all             all         gss include_realm=0 krb_realm={{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    hostgssenc  all             all             all         gss include_realm=0 krb_realm={{ .Values.identity.realm }}
 
     # Allow postgres with password for disaster recovery
     host        all             postgres        all         scram-sha-256

@@ -108,7 +108,7 @@ spec:
             # Make sure this principal has rights in the kadmin acl file (in
             # cm/kdc-conf, below).
             - name: OP_PRINCIPAL
-              value: "op1krbkeys@{{ .Values.identity.realm | required "values.identity.realm is required!" }}"
+              value: "op1krbkeys@{{ .Values.identity.realm }}"
             - name: OP_KEYTAB
               value: "op1krbkeys"
           volumeMounts:
@@ -165,8 +165,8 @@ metadata:
 data:
   kdc.conf: |
     [realms]
-        {{ .Values.identity.realm | required "values.identity.realm is required!" }} = {
-            acl_file = /config/kdc-conf/{{ .Values.identity.realm | required "values.identity.realm is required!" }}.acl
+        {{ .Values.identity.realm }} = {
+            acl_file = /config/kdc-conf/{{ .Values.identity.realm }}.acl
             kdc_listen = 8888
             kdc_tcp_listen = 8888
             kadmind_listen = 8749
@@ -181,7 +181,7 @@ data:
   #   principal       permissions
   # Permission 'x' means 'anything except extract an existing key
   # without changing it'.
-  {{ .Values.identity.realm | required "values.identity.realm is required!" }}.acl: |
+  {{ .Values.identity.realm }}.acl: |
     op1krbkeys      x
     admin           x
     op1krbkeys/*    x     */*1

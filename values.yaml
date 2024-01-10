@@ -1,12 +1,12 @@
 acs:
   # -- The organisation where ACS is being deployed
-  organisation: AMRC
+  #organisation: AMRC
   # -- The base URL that services will be served from
-  baseUrl: factoryplus.myorganisation.com
+  #baseUrl: factoryplus.myorganisation.com
   # -- Whether or not services should be served over HTTPS
   secure: true
   # -- The name of the secret holding the wildcard certificate for the above domain.
-  tlsSecretName: factoryplus-tls
+  #tlsSecretName: factoryplus-tls
   cacheMaxAge: 300
   # -- Image pull secrets for container images
   imagePullSecrets: []
@@ -15,7 +15,7 @@ identity:
   # -- Whether or not to enable the Identity component
   enabled: true
   # -- The Kerberos realm for this Factory+ deployment.
-  realm: FACTORYPLUS.MYORGANISATION.COM
+  #realm: FACTORYPLUS.MYORGANISATION.COM
   # -- Kerberos UPNs to grant kadmin access. This needs to be list of
   # objects with 'principal', 'permission' and (optionally)
   # 'restrictions' properties; see the kadmin documentation for their

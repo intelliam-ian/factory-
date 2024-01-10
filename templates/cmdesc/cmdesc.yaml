@@ -45,13 +45,13 @@ spec:
             - name: HOSTNAME
               value: cmdesc.{{ .Release.Namespace }}.svc.cluster.local
             - name: REALM
-              value: {{ .Values.identity.realm | required "values.identity.realm is required!" }}
+              value: {{ .Values.identity.realm }}
             - name: SPARKPLUG_ADDRESS
-              value: {{ .Values.acs.organisation | required "values.acs.organisation is required!" }}-Service-Core/Command_Escalation
+              value: {{ .Values.acs.organisation }}-Service-Core/Command_Escalation
             - name: DEVICE_UUID
               value: 23d4e8f9-76c0-49d5-addc-00b6ac05ee58
             - name: ROOT_PRINCIPAL
-              value: admin@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+              value: admin@{{ .Values.identity.realm }}
             - name: VERBOSE
               value: {{.Values.cmdesc.verbosity | quote | required "values.cmdesc.verbosity is required!"}}
             - name: HTTP_API_URL

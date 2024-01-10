@@ -46,13 +46,13 @@ spec:
             - name: HOSTNAME
               value: clusters.{{ .Release.Namespace }}.svc.cluster.local
             - name: REALM
-              value: {{ .Values.identity.realm | required "values.identity.realm is required!" }}
+              value: {{ .Values.identity.realm }}
             - name: EXTERNAL_DOMAIN
-              value: {{ .Values.acs.baseUrl | required "values.acs.baseUrl is required" }}
+              value: {{ .Values.acs.baseUrl }}
             - name: GIT_CHECKOUTS_DIR
               value: /data
             - name: GIT_EMAIL
-              value: sv1clusters@{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}
+              value: sv1clusters@{{.Values.acs.baseUrl }}
             - name: KUBESEAL_TEMP
               value: /cert
             - name: KRBKEYS_IMAGE

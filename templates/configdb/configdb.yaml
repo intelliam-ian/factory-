@@ -116,7 +116,7 @@ spec:
             - name: HOSTNAME
               value: configdb.{{ .Release.Namespace }}.svc.cluster.local
             - name: REALM
-              value: {{ .Values.identity.realm | required "values.identity.realm is required!" }}
+              value: {{ .Values.identity.realm }}
             - name: DEVICE_UUID
               value: 36861e8d-9152-40c4-8f08-f51c2d7e3c25
             - name: SPARKPLUG_ADDRESS
@@ -134,7 +134,7 @@ spec:
 {{ include "amrc-connectivity-stack.cache-max-age" (list . "configdb") | indent 12 }}
             # If this is set it names a principal which overrides all ACLs. This should be turned off in production.
             - name: ROOT_PRINCIPAL
-              value: admin@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+              value: admin@{{ .Values.identity.realm }}
             # This is the value published via MQTT. The CDB editor does
             # not use this so publish an internal URL. This will allow
             # the Directory to be smart about what to tell clients.

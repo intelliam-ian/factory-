@@ -6,7 +6,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1clusters@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1clusters@{{ .Values.identity.realm }}
   secret: clusters-keytabs/client
 ---
 apiVersion: factoryplus.app.amrc.co.uk/v1
@@ -16,8 +16,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/clusters.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: HTTP/clusters.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/clusters.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - HTTP/clusters.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
   secret: clusters-keytabs/server
 {{- end }}

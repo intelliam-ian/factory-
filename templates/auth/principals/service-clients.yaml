@@ -21,7 +21,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1auth@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1auth@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.cmdesc.enabled }}
@@ -32,7 +32,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1cmdesc@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1cmdesc@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.configdb.enabled }}
@@ -43,7 +43,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1configdb@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1configdb@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.directory.enabled }}
@@ -54,7 +54,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1directory@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1directory@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.mqtt.enabled }}
@@ -65,7 +65,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1mqtt@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1mqtt@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.manager.enabled }}
@@ -76,7 +76,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1manager@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1manager@{{ .Values.identity.realm }}
   secret: manager-keytab/client-keytab
 {{- end }}
 ---
@@ -88,7 +88,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1warehouse@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1warehouse@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.git.enabled }}
@@ -99,6 +99,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: sv1git@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: sv1git@{{ .Values.identity.realm }}
   secret: git-keytabs/client
 {{- end }}

@@ -118,7 +118,7 @@ spec:
             - name: HOSTNAME
               value: auth.{{ .Release.Namespace }}.svc.cluster.local
             - name: REALM
-              value: {{ .Values.identity.realm | required "values.identity.realm is required!" }}
+              value: {{ .Values.identity.realm }}
             - name: PORT
               value: "8080"
             - name: PGHOST
@@ -133,14 +133,14 @@ spec:
             # These are currently only used for the editor. They need to be resolvable by the
             # user's browser, so in-cluster names will not work.
             - name: HTTP_API_URL
-              value: "{{ .Values.acs.secure | ternary "https://" "http://" }}auth.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}"
+              value: "{{ .Values.acs.secure | ternary "https://" "http://" }}auth.{{.Values.acs.baseUrl}}"
             - name: CONFIGDB_URL
-              value: "{{ .Values.acs.secure | ternary "https://" "http://" }}configdb.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}"
+              value: "{{ .Values.acs.secure | ternary "https://" "http://" }}configdb.{{.Values.acs.baseUrl}}"
             # This principal, if configured, bypasses all ACLs. This is important for
             # bootstrapping but perhaps shouldn't be left in place once we can bootstrap without
             # manual intervention.
             - name: ROOT_PRINCIPAL
-              value: admin@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+              value: admin@{{.Values.identity.realm}}
           volumeMounts:
             - mountPath: /config/krb5-conf
               name: krb5-conf

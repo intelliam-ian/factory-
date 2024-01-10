@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`mqtt.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}`)
+    - match: Host(`mqtt.{{.Values.acs.baseUrl }}`)
       kind: Rule
       services:
         - name: mqtt
@@ -18,6 +18,6 @@ spec:
   tls:
     secretName: {{ .Values.switchboard.enabled | ternary "factoryplus-mqtt-tls" "factoryplus-tls" }}
     domains:
-      - main: mqtt.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}
+      - main: mqtt.{{.Values.acs.baseUrl }}
   {{ end }}
 {{- end -}}

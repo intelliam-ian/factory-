@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`git.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}`)
+    - match: Host(`git.{{.Values.acs.baseUrl }}`)
       kind: Rule
       services:
         - name: git
@@ -16,8 +16,8 @@ spec:
           namespace: {{ .Release.Namespace }}
   {{- if .Values.acs.secure }}
   tls:
-    secretName: {{ .Values.acs.tlsSecretName | required "values.acs.tlsSecretName is required!" }}
+    secretName: {{ .Values.acs.tlsSecretName }}
     domains:
-      - main: git.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}
+      - main: git.{{.Values.acs.baseUrl }}
   {{- end -}}
 {{- end -}}

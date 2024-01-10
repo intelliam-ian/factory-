@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`influxdb.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}`)
+    - match: Host(`influxdb.{{.Values.acs.baseUrl }}`)
       kind: Rule
       services:
         - name: acs-influxdb2
@@ -18,6 +18,6 @@ spec:
   tls:
     secretName: {{ .Values.switchboard.enabled | ternary "factoryplus-influxdb-tls" "factoryplus-tls" }}
     domains:
-      - main: influxdb-ingester.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}
+      - main: influxdb-ingester.{{.Values.acs.baseUrl }}
   {{- end -}}
 {{- end -}}

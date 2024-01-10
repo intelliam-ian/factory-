@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - {{ .Values.acs.secure | ternary "websecure" "web" }}
   routes:
-    - match: Host(`loki.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}`)
+    - match: Host(`loki.{{.Values.acs.baseUrl }}`)
       kind: Rule
       middlewares:
         - name: basic-auth
@@ -18,8 +18,8 @@ spec:
           namespace: {{ .Release.Namespace }}
   {{- if .Values.acs.secure }}
   tls:
-    secretName: {{ .Values.acs.tlsSecretName | required "values.acs.tlsSecretName is required!" }}
+    secretName: {{ .Values.acs.tlsSecretName }}
     domains:
-      - main: loki.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}
+      - main: loki.{{.Values.acs.baseUrl }}
   {{- end -}}
 {{- end -}}

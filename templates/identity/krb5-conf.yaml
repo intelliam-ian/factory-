@@ -7,14 +7,14 @@ metadata:
 data:
   krb5.conf: >
     [libdefaults]
-        default_realm = {{ .Values.identity.realm | required "values.identity.realm is required!" }}
+        default_realm = {{ .Values.identity.realm }}
         dns_canonicalize_hostname = false
         udp_preference_limit = 1
         spake_preauth_groups = edwards25519
 
     [domain_realm]
-        cluster.local = {{ .Values.identity.realm | required "values.identity.realm is required!" }}
-            {{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}} = {{ .Values.identity.realm | required "values.identity.realm is required!" }}
+        cluster.local = {{ .Values.identity.realm }}
+            {{.Values.acs.baseUrl }} = {{ .Values.identity.realm }}
 {{- range .Values.identity.crossRealm }}
 {{- $realm := .realm }}
         {{ .domain }} = {{ $realm }}
@@ -24,7 +24,7 @@ data:
 {{- end }}
 
     [realms]
-            {{ .Values.identity.realm | required "values.identity.realm is required!" }} = {
+            {{ .Values.identity.realm }} = {
             kdc = kdc.{{.Release.Namespace }}.svc.cluster.local
             admin_server = kadmin.{{ .Release.Namespace }}.svc.cluster.local
             disable_encrypted_timestamp = true

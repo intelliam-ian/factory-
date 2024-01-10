@@ -18,9 +18,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/auth.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: HTTP/auth.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/auth.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - HTTP/auth.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.cmdesc.enabled }}
@@ -31,9 +31,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/cmdesc.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: HTTP/cmdesc.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/cmdesc.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - HTTP/cmdesc.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.configdb.enabled }}
@@ -44,9 +44,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/configdb.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: HTTP/configdb.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/configdb.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - HTTP/configdb.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.directory.enabled }}
@@ -57,9 +57,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/directory.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: HTTP/directory.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/directory.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - HTTP/directory.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.mqtt.enabled }}
@@ -70,9 +70,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: mqtt/mqtt.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: mqtt/mqtt.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - mqtt/mqtt.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - mqtt/mqtt.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.manager.enabled }}
@@ -83,9 +83,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/manager.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: HTTP/manager.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/manager.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - HTTP/manager.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
   secret: manager-keytab/keytab
 {{- end }}
 ---
@@ -97,7 +97,7 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: postgres/postgres.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: postgres/postgres.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.warehouse.enabled }}
@@ -108,9 +108,9 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/warehouse.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: HTTP/warehouse.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/warehouse.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - HTTP/warehouse.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
 {{- end }}
 ---
 {{- if .Values.git.enabled }}
@@ -121,8 +121,8 @@ metadata:
   namespace: {{ .Release.Namespace }}
 spec:
   type: Random
-  principal: HTTP/git.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+  principal: HTTP/git.{{ .Release.Namespace }}.svc.cluster.local@{{ .Values.identity.realm }}
   additionalPrincipals:
-    - HTTP/git.{{.Values.acs.baseUrl | required "values.acs.baseUrl is required"}}@{{ .Values.identity.realm | required "values.identity.realm is required!" }}
+    - HTTP/git.{{.Values.acs.baseUrl }}@{{ .Values.identity.realm }}
   secret: git-keytabs/server
 {{- end }}
