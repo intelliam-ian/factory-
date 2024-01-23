@@ -347,6 +347,8 @@ traefik:
 # @ignore
 loki:
   enabled: true
+  global:
+    clusterDomain: "{{ .Values.acs.internalDomain }}"
   loki:
     auth_enabled: false
     commonConfig:
