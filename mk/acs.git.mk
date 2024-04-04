@@ -9,7 +9,7 @@ git.sha!=git rev-parse --verify HEAD
 .PHONY: git.prepare git.check-committed git.pull amend
 
 git.prepare:
-	@:
+	@: git.prepare
 
 ifndef git.allow_dirty
 git.prepare: git.check-committed

@@ -16,7 +16,7 @@ endif
 build: lint
 
 lint:
-	@:
+	@: lint
 
 ifdef eslint
 lint: js.eslint

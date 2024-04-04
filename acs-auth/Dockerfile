@@ -23,6 +23,7 @@ RUN <<'SHELL'
 SHELL
 
 FROM ${base_prefix}-pg-run:${base_version} AS run
+ARG src_sha
 
 # Copy across from the build container.
 WORKDIR /home/node/app
@@ -30,3 +31,4 @@ COPY --from=build --chown=root:root /home/node/app ./
 
 USER node
 CMD npm run authn
+LABEL uk.co.amrc.app.factoryplus.src-sha="${src_sha}"
