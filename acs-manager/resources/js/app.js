@@ -471,12 +471,15 @@ function buildServiceClient () {
     return [`${scheme}://${name}.${base}`];
   });
   fplus.Fetch._fetch_token = async serviceUrl => {
+    fplus.debug.log("token", "Fetching new token for %s", serviceUrl);
     const { scheme, base } = await urlInfo();
     const match = serviceUrl.match(`${scheme}://([a-z]+)\.${base}`);
     if (!match)
       throw `Can't fetch token for ${serviceUrl}`;
-    return axios.post(`/api/service/${match[1]}/token`)
+    const tok = await axios.post(`/api/service/${match[1]}/token`)
       .then(r => r.data.data);
+    fplus.Fetch.tokens.set(serviceUrl, tok);
+    return tok;
   };
   window.ACS_Manager_ServiceClient = fplus;
   return fplus;
