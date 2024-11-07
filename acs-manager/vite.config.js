@@ -85,6 +85,14 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, './'),
       'tailwind-config': path.resolve(__dirname, './tailwind.config.js'),
+
+      // Optional ServiceClient deps we don't want to webpack
+      "@amrc-factoryplus/sparkplug-app": path.resolve(__dirname, "./empty-module.js"),
+      "got": path.resolve(__dirname, "./empty-module.js"),
+      "got-fetch": path.resolve(__dirname, "./empty-module.js"),
+      "gssapi.js": path.resolve(__dirname, "./empty-module.js"),
+      "rxjs": path.resolve(__dirname, "./empty-module.js"),
+
       vue: 'vue/dist/vue.esm.js',
 
 
