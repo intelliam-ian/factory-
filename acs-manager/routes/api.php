@@ -19,6 +19,7 @@ use App\Http\Controllers\OriginMapController;
 use App\Http\Controllers\ReauthenticateController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SensitiveInformationController;
+use App\Http\Controllers\ServiceProxyController;
 use App\Http\Controllers\UserMetaController;
 use App\Http\Controllers\UserPreferenceController;
 use Illuminate\Support\Facades\Route;
@@ -96,4 +97,8 @@ Route::middleware('auth:api')->get('/device-schemas/{schema}/versions', [DeviceS
 
 // ------ Sensitive Information ------ //
 Route::middleware('auth:api')->post('/sensitive-information', [SensitiveInformationController::class, 'create']);
+
+// ------ Service proxy ------ //
+Route::middleware('auth:api')->get('/service/urlinfo', [ServiceProxyController::class, 'urlinfo']);
+Route::middleware('auth:api')->post('/service/{service}/token', [ServiceProxyController::class, 'token']);
 

@@ -12,6 +12,8 @@
 import './bootstrap';
 import '../css/app.css';
 
+import { ServiceClient, UUIDs } from "@amrc-factoryplus/service-client";
+
 import Vue from 'vue';
 import VTooltip from 'v-tooltip';
 import moment from 'moment';
@@ -23,8 +25,6 @@ const toastOptions = {
   icon: false,
 };
 Vue.use(Toast, toastOptions);
-
-
 
 Vue.prototype.moment = moment;
 
@@ -438,6 +438,50 @@ Vue.mixin({
   },
 });
 
+/* The PHP ServiceClient uses names to identify services rather than
+ * UUIDs. We also use these names for 'discovery'. */
+const serviceNames = new Map([
+  [UUIDs.Service.ConfigDB,    "configdb"],
+  [UUIDs.Service.Directory,   "directory"],
+]);
+
+/* XXX This is an evil hack, but this code won't last long so I don't
+ * care. Create a ServiceClient and hijack internal methods so we can
+ * use our backend credentials. */
+function buildServiceClient () {
+  let _urlInfo;
+  const urlInfo = async () => {
+    if (!_urlInfo) {
+      _urlInfo = await axios.get("/api/service/urlinfo")
+        .then(r => r.data.data, e => undefined);
+    }
+    return _urlInfo;
+  };
+      
+  const fplus = new ServiceClient({
+    browser:  true,
+    verbose:  "ALL",
+  });
+
+  fplus.Discovery.set_service_discovery(async uuid => {
+    const name = serviceNames.get(uuid);
+    if (!name)
+      throw "No credentials for backend";
+    const { scheme, base } = await urlInfo();
+    return [`${scheme}://${name}.${base}`];
+  });
+  fplus.Fetch._fetch_token = async serviceUrl => {
+    const { scheme, base } = await urlInfo();
+    const match = serviceUrl.match(`${scheme}://([a-z]+)\.${base}`);
+    if (!match)
+      throw `Can't fetch token for ${serviceUrl}`;
+    return axios.post(`/api/service/${match[1]}/token`)
+      .then(r => r.data.data);
+  };
+  window.ACS_Manager_ServiceClient = fplus;
+  return fplus;
+}
+
 const app = new Vue({
   el: '#app',
   validations: {},
@@ -461,4 +505,10 @@ const app = new Vue({
     baseTitle: null,
     user: JSON.parse(document.querySelector('meta[name=\'user\']').getAttribute('content')),
   },
+
+  provide () {
+    return {
+      serviceClient: buildServiceClient(),
+    };
+  }
 });
