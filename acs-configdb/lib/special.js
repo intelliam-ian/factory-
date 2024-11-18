@@ -76,4 +76,4 @@ class ConfigSchema extends SpecialApp {
     }
 }
 
-export const Specials = [ObjectRegistration, ConfigSchema];
+export const SpecialApps = [ObjectRegistration, ConfigSchema];

@@ -54,6 +54,7 @@ export default class API {
 
         api.use(express.json({ type: "application/merge-patch+json" }));
 
+        api.get("/app", compat(`/class/${Class.App}`));
         api.all("/app/:app/device", compat(`/app/:app/class/${Class.Device}`));
         api.all("/app/:app/schema", compat(`/app/:app/class/${Class.Schema}`));
         api.all("/app/:app/app", compat(`/app/:app/class/${Class.App}`));
@@ -62,7 +63,6 @@ export default class API {
         api.all("/app/:app/app/:object", compat("/app/:app/object/:object"));
         api.all("/app/:app/config", compat("/app/:app/object/:app"));
 
-        api.get("/app", this.apps_get.bind(this));
         api.post("/app", this.apps_post.bind(this));
         api.get("/app/:app", this.app_get.bind(this));
 
@@ -74,6 +74,12 @@ export default class API {
         api.delete("/object/:object", this.object_delete.bind(this));
         api.get("/class", this.class_list.bind(this));
         api.get("/class/:class", this.class_get.bind(this));
+
+        const clk = t => this.class_lookup.bind(this, t);
+        api.get("/class/:class/member", clk("membership"));
+        api.get("/class/:class/subclass", clk("subclass"));
+        api.get("/class/:class/all/member", clk("all_membership"));
+        api.get("/class/:class/all/subclass", clk("all_subclass"));
 
         api.get("/app/:app/object", this.config_list.bind(this));
         api.get("/app/:app/class/:class", this.config_list.bind(this));
@@ -90,14 +96,6 @@ export default class API {
         api.get("/save", this.dump_save.bind(this));
     }
 
-    async apps_get(req, res) {
-        const ok = await this.auth.check_acl(req.auth, Perm.Manage_Obj, Class.App, true);
-        if (!ok) return res.status(403).end();
-
-        let list = await this.model.apps_get();
-        res.status(200).json(list);
-    }
-
     async apps_post(req, res) {
         const ok = await this.auth.check_acl(req.auth, Perm.Manage_Obj, Class.App, true);
         if (!ok) return res.status(403).end();
@@ -111,7 +109,7 @@ export default class API {
             /* ignore errors */
             await this.model.config_put(
                 {app: App.Info, object: uuid},
-                {name: req.body.name});
+                {name: req.body.name, primaryClass: Class.App});
         }
 
         res.status(rv).end();
@@ -122,6 +120,9 @@ export default class API {
         if (!ok) return res.status(403).end();
 
         const uuid = req.params.app;
+        /* XXX What verification do we want here? Do we insist that an
+         * App-UUID is a member of Application, or do we allow any
+         * object? */
         const klass = await this.model.object_class(uuid);
         if (klass != Class.App)
             res.status(404).end();
@@ -178,17 +179,10 @@ export default class API {
         const ok = await this.auth.check_acl(req.auth, Perm.Manage_Obj, klass, true);
         if (!ok) return res.status(403).end();
 
-        let st;
-        if (uuid == null) {
-            [st, uuid] = await this.model.object_create_new(klass);
-        } else {
-            st = await this.model.object_create(uuid, klass);
-        }
+        const obj = await this.model.object_create(uuid, klass);
 
-        res.status(st);
-        if (st > 299)
-            return res.end();
-        res.json({uuid, "class": klass});
+        res.status(obj.created ? 201 : 200);
+        res.json({uuid: obj.uuid});
     }
 
     async object_delete(req, res) {
@@ -219,6 +213,16 @@ export default class API {
         const list = await this.model.class_get(klass);
         if (list == null)
             return res.status(404).end();
+        return res.status(200).json(list);
+    }
+
+    async class_lookup (rel, req, res) {
+        const klass = req.params.class;
+        const ok = await this.auth.check_acl(req.auth, Perm.Manage_Obj, klass, true);
+        if (!ok) return res.status(403).end();
+
+        const list = await this.model.class_lookup(klass, rel);
+        if (!list) return res.status(404).end();
         return res.status(200).json(list);
     }
 
